@@ -1,61 +1,33 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-
-<main>
+<main class="lobby-container">
     <section id="form-container">
-        <img id="logo" src="{% static 'images/chat-icon.png' %}" alt="">
-        
+        <img id="logo" src="{% static 'images/chat-icon.png' %}" alt="Logo">
         <div id="welcome-message">
             <h1>Welcome to MyChat</h1>
             <p>A Group Video Calling Application Just for You!</p>
         </div>
-
         <form id="form">
-            <div class="form-field">
-                <input type="text" name="room" placeholder="Enter a Room Name..." style="text-transform: uppercase;" />
-            </div>
-
-            <div class="form-field">
-                <input type="text" name="username" placeholder="Enter Your Name..." style="text-transform: uppercase;" />
-            </div>
-
-            <div class="form-field">
-                <input type="submit" value="Join Stream" />
-            </div>
+            <div class="form-field"><input type="text" name="room" placeholder="Enter a Room Name..." style="text-transform: uppercase;" required /></div>
+            <div class="form-field"><input type="text" name="username" placeholder="Enter Your Name..." style="text-transform: uppercase;" required /></div>
+            <div class="form-field"><input type="submit" value="Join Stream" /></div>
         </form>
-
     </section>
 </main>
-
 <script type="text/javascript">
     let form = document.getElementById('form')
-
-    let handleSubmit = async (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault()
-
-        // ✅ trim fix (space remove)
         let room = e.target.room.value.trim().toUpperCase()
         let name = e.target.username.value.trim()
-
-        // ✅ get token
         let response = await fetch(`/get_token/?channel=${room}`)
         let data = await response.json()
-
-        let UID = data.uid
-        let token = data.token
-
-        // ✅ store in session
-        sessionStorage.setItem('UID', UID)
-        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('UID', data.uid)
+        sessionStorage.setItem('token', data.token)
         sessionStorage.setItem('room', room)
         sessionStorage.setItem('name', name)
-
-        // ✅ IMPORTANT FIX (token safe URL)
-        window.location.href = `/room/?room=${room}&name=${name}&uid=${UID}&token=${encodeURIComponent(token)}`
-    }
-
-    form.addEventListener('submit', handleSubmit)
+        window.location.href = `/room/?room=${room}&name=${name}&uid=${data.uid}&token=${encodeURIComponent(data.token)}`
+    })
 </script>
-
 {% endblock %}

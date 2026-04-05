@@ -1,380 +1,196 @@
-    /* ==========================================
-    1. GLOBAL STYLES & VARIABLES
-    ========================================== */
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+:root {
+    --bg-dark: #202124;
+    --footer-bg: #202124;
+    --btn-bg: #3c4043;
+    --btn-hover: #4a4d51;
+    --danger: #ea4335;
+    --blue-btn: #8ab4f8;
+}
 
-    :root {
-        --primary: #4f46e5;
-        --primary-hover: #4338ca;
-        --danger: #ef4444;
-        --danger-hover: #dc2626;
-        --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        --glass-bg: rgba(255, 255, 255, 0.85);
-        --glass-dark: rgba(15, 23, 42, 0.85);
-        --shadow-main: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-        background: var(--bg-gradient);
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; /* Centers both Lobby and Room vertically */
-        color: #1e293b;
-        overflow-x: hidden;
-    }
+body {
+    background-color: var(--bg-dark);
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    color: white;
+    margin: 0;
+    overflow: hidden;
+    display: flex; 
+}
 
-    /* ==========================================
-    2. LOBBY / WELCOME SCREEN STYLES
-    ========================================== */
-    #form-container {
-        background: var(--glass-bg);
-        width: 90%;
-        max-width: 450px;
-        padding: 40px;
-        border-radius: 24px;
-        box-shadow: var(--shadow-main);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        text-align: center;
-        animation: fadeIn 0.6s ease-out;
-    }
+/* --- LOBBY PAGE --- */
+.lobby-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+#form-container {
+    background: #2d2e31;
+    padding: 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
 
-    #form-container img {
-        width: 90px;
-        height: auto;
-        margin: 0 auto 20px auto;
-        display: block;
-        filter: drop-shadow(0 10px 15px rgba(79, 70, 229, 0.2));
-    }
+#logo { width: 80px; margin-bottom: 20px; }
 
-    #welcome-message h1 {
-        font-size: 28px;
-        font-weight: 700;
-        color: #0f172a;
-        margin: 0 0 8px 0;
-    }
+.form-field input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #5f6368;
+    background: transparent;
+    color: white;
+}
 
-    #welcome-message p {
-        font-size: 14px;
-        color: #64748b;
-        margin-bottom: 30px;
-    }
+.form-field input[type="submit"] {
+    background: var(--blue-btn);
+    color: #202124;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
 
-    .form-field {
-        margin-bottom: 20px;
-    }
+/* --- ROOM PAGE --- */
+.room-page {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-dark);
+}
 
-    .form-field input[type="text"] {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 15px 20px;
-        border: 2px solid #e2e8f0;
-        border-radius: 14px;
-        font-size: 15px;
-        font-weight: 500;
-        background: #f8fafc;
-        color: #1e293b;
-        transition: all 0.3s ease;
-        outline: none;
-    }
+.room-header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    font-size: 14px;
+    background: var(--bg-dark);
+}
 
-    .form-field input[type="text"]:focus {
-        border-color: var(--primary);
-        background: #ffffff;
-        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-    }
+#video-streams {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 12px;
+    padding: 12px;
+    align-content: center;
+    justify-content: center;
+    overflow-y: auto;
+}
 
-    .form-field input::placeholder {
-        color: #94a3b8;
-        font-weight: 400;
-    }
+.video-container {
+    width: 100%;
+    max-width: 850px;
+    aspect-ratio: 16/9;
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+}
 
-    .form-field input[type='submit'] {
-        width: 100%;
-        background: var(--primary);
-        color: white;
-        padding: 16px;
-        border: none;
-        border-radius: 14px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-        transition: all 0.3s ease;
-        margin-top: 10px;
-    }
+.video-player { width: 100% !important; height: 100% !important; object-fit: cover; }
 
-    .form-field input[type='submit']:hover {
-        background: var(--primary-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 15px 20px -5px rgba(79, 70, 229, 0.4);
-    }
+.user-name {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,0,0,0.5);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    z-index: 10;
+}
 
-    /* ==========================================
-    3. ROOM / VIDEO SCREEN STYLES
-    ========================================== */
-    #room-name-wrapper {
-        background: var(--glass-bg);
-        backdrop-filter: blur(10px);
-        padding: 12px 30px;
-        border-radius: 0 0 20px 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        border: 1px solid rgba(255,255,255,0.5);
-        border-top: none;
-        text-align: center;
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        min-width: 250px;
-    }
+/* --- FOOTER CONTROLS --- */
+#controls-wrapper {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    background: var(--footer-bg);
+    border-top: 1px solid #3c4043;
+    z-index: 100; /* Phone-la hide aagama irukka */
+}
 
-    #room-name-wrapper p {
-        margin: 0;
-        font-weight: 700;
-        color: var(--primary);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 14px;
-    }
+.footer-left { width: 30%; font-size: 13px; opacity: 0.8; }
+.footer-right { width: 30%; } 
 
+.footer-center {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: var(--btn-bg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.diagonal-line {
+    position: absolute;
+    width: 2.5px;
+    height: 32px;
+    background-color: white;
+    transform: rotate(45deg);
+    display: none;
+    z-index: 20;
+}
+
+.icon-wrapper.muted .diagonal-line { display: block; }
+.control-icon { width: 22px; filter: invert(1); z-index: 10; }
+
+#leave-btn-wrapper {
+    background: var(--danger) !important;
+    width: 65px;
+    border-radius: 20px;
+}
+
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 600px) {
     #video-streams {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 25px;
-        width: 95%;
-        max-width: 1200px;
-        padding: 80px 0 120px 0; /* Space for header and controls */
-        margin: 0 auto;
-        align-items: center;
-        justify-items: center;
+        grid-template-columns: 1fr;
+        padding: 8px;
+        padding-bottom: 100px; /* Space for footer */
     }
 
-    .video-container {
-        width: 100%;
-        background-color: #0f172a;
-        border-radius: 20px;
-        overflow: hidden;
-        aspect-ratio: 16 / 9;
-        position: relative;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        border: 2px solid transparent;
-        transition: all 0.3s ease;
-    }
-
-    .video-container:hover {
-        transform: translateY(-5px);
-        border-color: rgba(79, 70, 229, 0.5);
-        box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
-    }
-
-    .video-player {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    /* ==========================================
-    4. FLOATING CONTROLS
-    ========================================== */
+    .footer-left, .footer-right { display: none; } /* Hide unnecessary info on mobile */
+    
     #controls-wrapper {
         position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 20px;
-        background: var(--glass-dark);
-        backdrop-filter: blur(15px);
-        padding: 12px 30px;
-        border-radius: 100px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        z-index: 999;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        justify-content: center;
+        background: rgba(32, 33, 36, 0.95); /* Semi-transparent */
+        backdrop-filter: blur(5px);
+        height: 75px;
+    }
+
+    .footer-center {
+        gap: 15px; /* Better spacing for touch */
     }
 
     .icon-wrapper {
-        height: 50px;
-        width: 50px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        width: 44px;
+        height: 44px;
     }
-
-    .icon-wrapper:hover {
-        background: var(--primary);
-        transform: scale(1.1) translateY(-3px);
-    }
-
-    .control-icon {
-        width: 22px;
-        height: 22px;
-        filter: invert(1); /* Makes black SVGs white */
-    }
-
-    /* Specific styling for the leave button wrapper */
-    .icon-wrapper:has(#leave-btn),
-    #leave-btn-wrapper {
-        background: var(--danger);
-    }
-
-    .icon-wrapper:has(#leave-btn):hover,
-    #leave-btn-wrapper:hover {
-        background: var(--danger-hover);
-        box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-    }
-
-    /* ==========================================
-    5. MOBILE RESPONSIVE
-    ========================================== */
-    @media screen and (max-width: 768px) {
-        #form-container {
-            padding: 30px 20px;
-        }
-
-        #video-streams {
-            /* Change 1: Ensure the grid takes full width */
-            grid-template-columns: 1fr; 
-            width: 100%;
-            padding: 80px 15px 120px 15px;
-            gap: 15px;
-            /* Change 2: Ensure it doesn't try to center everything in a way that shrinks them */
-            display: flex;
-            flex-direction: column;
-        }
-
-        .video-container {
-            /* Change 3: Force the container to be wide */
-            width: 100%;
-            max-width: 100%;
-            min-height: 200px; /* Gives it a base height */
-            aspect-ratio: 16 / 9;
-        }
-
-        /* Keep your existing control styles below */
-        #controls-wrapper {
-            gap: 15px;
-            padding: 10px 25px;
-            bottom: 20px;
-            width: auto;
-        }
-
-        .icon-wrapper {
-            height: 45px;
-            width: 45px;
-        }
-    }
-
-
-    /* ==========================================
-    6. EXTRA ENHANCEMENTS (NEW ADDITIONS)
-    ========================================== */
-
-    /* Custom Scrollbar for a modern feel */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: var(--bg-gradient); 
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #cbd5e1; 
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8; 
-    }
-
-    /* Video Pop-in Animation when someone joins */
-    .video-container {
-        animation: videoPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    @keyframes videoPopIn {
-        from { opacity: 0; transform: scale(0.8); }
-        to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Active Speaker Glow Effect */
-    .video-container.active-speaker {
-        border-color: var(--primary);
-        box-shadow: 0 0 25px rgba(79, 70, 229, 0.6);
-        transform: scale(1.02);
-    }
-
-    /* Video Name Tags Overlay */
-    .name-tag {
-        position: absolute;
-        bottom: 15px;
-        left: 15px;
-        background: rgba(15, 23, 42, 0.7);
-        color: white;
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        backdrop-filter: blur(5px);
-        z-index: 10;
-        letter-spacing: 0.5px;
-    }
-
-    /* Disabled State for Mic/Camera controls */
-    .icon-wrapper.disabled {
-        background: rgba(239, 68, 68, 0.2); /* Light red */
-        border: 1px solid var(--danger);
-    }
-    .icon-wrapper.disabled .control-icon {
-        filter: invert(40%) sepia(85%) saturate(1450%) hue-rotate(338deg) brightness(95%) contrast(92%); /* Turns SVG red */
-    }
-    .icon-wrapper.disabled:hover {
-        background: var(--danger);
-    }
-    .icon-wrapper.disabled:hover .control-icon {
-        filter: invert(1); /* Turns white on hover */
-    }
-
-    /* ==========================================
-    7. USER NAME BADGE STYLES
-    ========================================== */
-    
-    /* Note: Make sure your HTML has class="user-name" for the name text */
-    .video-container .user-name { 
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        background: rgba(15, 23, 42, 0.65); /* Dark semi-transparent background */
-        backdrop-filter: blur(8px); /* Glass effect */
-        color: #ffffff;
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        z-index: 10;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        text-transform: capitalize; /* Makes 'admin' look like 'Admin' */
-        transition: all 0.3s ease;
-    }
-
-    /* Hover effect for the video container to make the name badge pop out slightly */
-    .video-container:hover .user-name {
-        background: rgba(15, 23, 42, 0.85);
-        transform: translateY(-2px);
-        border-color: rgba(79, 70, 229, 0.5); /* Primary color border on hover */
-    }
+}

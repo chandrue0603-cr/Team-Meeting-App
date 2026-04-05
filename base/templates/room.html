@@ -1,31 +1,46 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<main>
-    <section id="room-name-wrapper">
-        <p>Room Name: <span id="room-name"></span></p>
-    </section>
+<div class="room-page">
+    <header class="room-header">
+        <span id="room-name" style="display:none;"></span>
+        <div><strong>ROOM:</strong> <span id="display-room"></span></div>
+    </header>
 
-    <section id="video-streams"></section>
+    <main id="video-streams"></main>
 
-    <section id="controls-wrapper">
-        <div class="icon-wrapper">
-            <img class="control-icon" src="{% static 'images/microphone.svg' %}" alt="" id="mic-btn">
+    <footer id="controls-wrapper">
+        <div class="footer-left">Meeting Details</div>
+
+        <div class="footer-center">
+            <div class="icon-wrapper" id="mic-btn-wrapper">
+                <img class="control-icon" src="{% static 'images/microphone.svg' %}">
+                <div class="diagonal-line"></div>
+            </div>
+            <div class="icon-wrapper" id="camera-btn-wrapper">
+                <img class="control-icon" src="{% static 'images/video.svg' %}">
+                <div class="diagonal-line"></div>
+            </div>
+            <div class="icon-wrapper" id="screen-btn-wrapper" title="Share Screen">
+                <img class="control-icon" src="{% static 'images/screen.svg' %}">
+            </div>
+            <div class="icon-wrapper" id="chat-btn-wrapper" title="Chat">
+                <img class="control-icon" src="{% static 'images/chat.svg' %}">
+            </div>
+            <div class="icon-wrapper" id="leave-btn-wrapper">
+                <img class="control-icon" src="{% static 'images/leave.svg' %}" id="leave-btn">
+            </div>
         </div>
 
-        <div class="icon-wrapper">
-            <img class="control-icon" src="{% static 'images/video.svg' %}" alt="" id="camera-btn">
-        </div>
-        
-        <div class="icon-wrapper">
-            <img class="control-icon" src="{% static 'images/leave.svg' %}" alt="" id="leave-btn">
-        </div>
+        <div class="footer-right"></div>
+    </footer>
+</div>
 
-    </section>
-
-</main>
-<script type="text/javascript" src="{% static 'assets/AgoraRTC_N-4.20.0.js' %}">
-</script>
-<script type="text/javascript" src="{% static 'js/stream.js' %}">
+<script src="{% static 'assets/AgoraRTC_N-4.20.0.js' %}"></script>
+<script src="{% static 'js/stream.js' %}?v=1700"></script>
+<script>
+    const currentRoom = sessionStorage.getItem('room');
+    document.getElementById('display-room').innerText = currentRoom || "NEWYEAR";
+    document.getElementById('room-name').innerText = currentRoom || "NEWYEAR";
 </script>
 {% endblock %}
