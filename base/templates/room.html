@@ -7,10 +7,43 @@
         <div><strong>ROOM:</strong> <span id="display-room"></span></div>
     </header>
 
+    <!-- INFO PANEL (Left) -->
+    <div class="side-panel" id="info-panel">
+        <div class="panel-header">
+            <h3>Meeting Info</h3>
+            <button class="close-panel-btn" id="close-info-btn">✕</button>
+        </div>
+        <div class="panel-body">
+            <div class="info-item">
+                <span class="info-label">⏱ Duration</span>
+                <span class="info-value" id="meeting-timer">00:00:00</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">👥 Participants</span>
+                <ul id="participants-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHAT PANEL (Right) -->
+    <div class="side-panel right-panel" id="chat-panel">
+        <div class="panel-header">
+            <h3>In-call messages</h3>
+            <button class="close-panel-btn" id="close-chat-btn">✕</button>
+        </div>
+        <div class="panel-body" id="chat-messages"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Send a message..." />
+            <button id="send-btn">➤</button>
+        </div>
+    </div>
+
     <main id="video-streams"></main>
 
     <footer id="controls-wrapper">
-        <div class="footer-left">Meeting Details</div>
+        <div class="footer-left" id="info-btn-wrapper" title="Meeting Info" style="cursor:pointer;">
+            📋 Meeting Details
+        </div>
 
         <div class="footer-center">
             <div class="icon-wrapper" id="mic-btn-wrapper">
@@ -22,10 +55,10 @@
                 <div class="diagonal-line"></div>
             </div>
             <div class="icon-wrapper" id="screen-btn-wrapper" title="Share Screen">
-                <img class="control-icon" src="{% static 'images/screen.svg' %}">
+                <img class="control-icon" src="{% static 'images/screen.png' %}">
             </div>
             <div class="icon-wrapper" id="chat-btn-wrapper" title="Chat">
-                <img class="control-icon" src="{% static 'images/chat.svg' %}">
+                <img class="control-icon" src="{% static 'images/chat.png' %}">
             </div>
             <div class="icon-wrapper" id="leave-btn-wrapper">
                 <img class="control-icon" src="{% static 'images/leave.svg' %}" id="leave-btn">
@@ -37,7 +70,7 @@
 </div>
 
 <script src="{% static 'assets/AgoraRTC_N-4.20.0.js' %}"></script>
-<script src="{% static 'js/stream.js' %}?v=1700"></script>
+<script src="{% static 'js/stream.js' %}?v=1800"></script>
 <script>
     const currentRoom = sessionStorage.getItem('room');
     document.getElementById('display-room').innerText = currentRoom || "NEWYEAR";
