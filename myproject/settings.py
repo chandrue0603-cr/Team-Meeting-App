@@ -130,8 +130,12 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.dev",
     "https://*.onrender.com",
 ]
+
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [os.environ.get('REDIS_URL')],
+        },
     }
 }
